@@ -4,16 +4,20 @@ author: "Ruicong(Timothy) Du"
 date: "2024-09-15"
 output: github_document
 ---
+#problem 1
 
-#load the penguins dataset
-```{r setup,}
+##load the penguins dataset
+```{r setup}
 library(palmerpenguins)
 data("penguins", package = "palmerpenguins")
 ```
 
-#show structure of the dataset for variables and their values
+##show structure of the dataset for variables and their values
+```{r explore dataset}
 str(penguins)
+```
 
+## description of the dataset
 The penguins dataset contains information on penguins from the Palmer Archipelago, Antarctica. The dataset consists of `r nrow(penguins)` rows and `r ncol(penguins)` columns.
 
 The key variables and values are:
