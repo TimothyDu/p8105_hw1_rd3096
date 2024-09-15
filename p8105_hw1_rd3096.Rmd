@@ -8,6 +8,7 @@ output: github_document
 
 ##load the penguins dataset
 ```{r setup}
+library(ggplot2)
 library(palmerpenguins)
 data("penguins", package = "palmerpenguins")
 ```
@@ -29,5 +30,17 @@ The key variables and values are:
 *sex: The sex of the penguins (male or female).
 
 The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
+
+##Make a scatterplot for flipper length vs bill length
+```{r scatterplot}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(
+    title = "Flipper Length vs Bill Length by Species",
+    x = "Bill Length (mm)",
+    y = "Flipper Length (mm)",
+    color = "Species"
+  ) 
+```
 
 
