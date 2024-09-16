@@ -7,12 +7,10 @@ output: github_document
 #problem 1
 
 ##load the penguins dataset
-```{r setup}
+```{r}
 library(ggplot2)
-library(palmerpenguins)
 data("penguins", package = "palmerpenguins")
 ```
-
 ##show structure of the dataset for variables and their values
 ```{r explore dataset}
 str(penguins)
@@ -43,4 +41,42 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)
   ) 
 ```
 
+#problem 2
 
+## load neccessary library
+```{r setup2}
+library(tidyverse)
+```
+
+##create the data frame
+```{r data frame}
+set.seed(1)
+frame_df=tibble(
+  vec_numeric=rnorm(10),
+  vec_logical=rnorm(10)>0,
+  vec_char=letters[1:10],
+  vec_factor=factor(rep(c("level1", "level2", "level3"), length.out = 10))
+)
+
+print(frame_df)
+```
+
+##take the mean of each variable
+```{r take mean}
+mean_numeric=mean(pull(frame_df,vec_numeric))
+mean_logical=mean(pull(frame_df,vec_logical))
+mean_char=tryCatch(mean(pull(frame_df,vec_char)), error = function(e) e)
+mean_factor=tryCatch(mean(pull(frame_df,vec_factor)), error = function(e) e)
+```
+
+The mean of the numeric vector is `r mean(frame_df$vec_numeric)`.  
+The mean of the logical vector is `r mean(frame_df$vec_logical)`.  
+For the character vector, attempting to calculate the mean results in an error: `r warning in mean.default(pull(frame_df,vec_char)):argument is not numeric or logical:returing NA`
+For the character vector, attempting to calculate the mean results in an error: `r warning in mean.default(pull(frame_df,vec_factor)):argument is not numeric or logical:returing NA`
+
+##Explanation for what mean works and what doesnot
+*mean_numeric: This will calculate the mean of vec_numeric, which is a numeric vector. This will work because the values are numeric.
+*mean_logical: This will calculate the mean of vec_logical. Logical vectors are treated as 1 (TRUE) and 0 (FALSE), so the mean will represent the proportion of TRUE values.
+*mean_char: This will fail because the vec_char is a character vector, and r cannot calculate a mean for characters. 
+*mean_factor: This will also fail because factors are categorical variables. and r cannot calculate a mean for characters. 
+                   
