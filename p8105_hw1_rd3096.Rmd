@@ -9,6 +9,7 @@ output: github_document
 ##load the penguins dataset
 ```{r}
 library(ggplot2)
+library(tidyverse)
 data("penguins", package = "palmerpenguins")
 ```
 ##show structure of the dataset for variables and their values
@@ -90,8 +91,8 @@ For the factor vector, attempting to calculate the mean results in: `r tryCatch(
 
 ## Explicit conversion to numeric
 ```{r chunk_name, echo=TRUE, results='hide'}
-as.numeric(frame_df$vec_char) 
-as.numeric(frame_df$vec_factor)
+as.numeric(pull(frame_df, vec_char))
+as.numeric(pull(frame_df,vec_factor))
 ```
 
 ##Explaination for coercion and convertion:
