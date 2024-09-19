@@ -44,11 +44,6 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)
 
 #problem 2
 
-## load neccessary library
-```{r setup2}
-library(tidyverse)
-```
-
 ##create the data frame
 ```{r data frame}
 set.seed(1)
