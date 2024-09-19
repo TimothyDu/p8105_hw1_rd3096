@@ -7,7 +7,7 @@ output: github_document
 #problem 1
 
 ##load the penguins dataset
-```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
+```{r setup, message = FALSE, warning = FALSE}
 library(ggplot2)
 library(tidyverse)
 data("penguins", package = "palmerpenguins")
@@ -91,12 +91,15 @@ For the factor vector, attempting to calculate the mean results in: `r tryCatch(
 
 ## Explicit conversion to numeric
 ```{r chunk_name, echo=TRUE, results='hide'}
+as.numeric(pull(frame_df, vec_logical))
 as.numeric(pull(frame_df, vec_char))
 as.numeric(pull(frame_df,vec_factor))
 ```
 
 ##Explaination for coercion and convertion:
 
-1.Character to numeric conversion leads to NAs because characters can't be interpreted as numbers.Because characters like "a", "b", etc. cannot be converted to numbers.
+1.Logical vectors are treated as 1 (TRUE) and 0 (FALSE), so the mean will represent the proportion of TRUE values.
 
-2.Factor to numeric conversion works by converting each factor level to its corresponding numeric code.                   
+2..Character to numeric conversion leads to NAs because characters can't be interpreted as numbers.Because characters like "a", "b", etc. cannot be converted to numbers.
+
+3..Factor to numeric conversion works by converting each factor level to its corresponding numeric code.                   
