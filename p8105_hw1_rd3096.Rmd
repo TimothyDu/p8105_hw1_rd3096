@@ -30,7 +30,7 @@ The key variables and values are:
 The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
 
 ##Make a scatterplot for flipper length vs bill length
-```{r scatterplot}
+```{r scatterplot, warning=FALSE}
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point() +
   labs(
@@ -62,21 +62,40 @@ print(frame_df)
 ```
 
 ##take the mean of each variable
-```{r take mean}
+```{r mean,warning=FALSE}
 mean_numeric=mean(pull(frame_df,vec_numeric))
 mean_logical=mean(pull(frame_df,vec_logical))
 mean_char=tryCatch(mean(pull(frame_df,vec_char)), error = function(e) e)
 mean_factor=tryCatch(mean(pull(frame_df,vec_factor)), error = function(e) e)
 ```
 
-The mean of the numeric vector is `r mean(frame_df$vec_numeric)`.  
-The mean of the logical vector is `r mean(frame_df$vec_logical)`.  
-For the character vector, attempting to calculate the mean results in an error: `r warning in mean.default(pull(frame_df,vec_char)):argument is not numeric or logical:returing NA`
-For the character vector, attempting to calculate the mean results in an error: `r warning in mean.default(pull(frame_df,vec_factor)):argument is not numeric or logical:returing NA`
+The mean of the numeric vector is `r mean(frame_df$vec_numeric)`.
+
+The mean of the logical vector is `r mean(frame_df$vec_logical)`.
+
+For the character vector, attempting to calculate the mean results in: `r tryCatch(mean(frame_df$vec_char), error = function(e) "Error: Cannot calculate mean for characters")`.
+
+For the factor vector, attempting to calculate the mean results in: `r tryCatch(mean(frame_df$vec_factor), error = function(e) "Error: Cannot calculate mean for factors")`.
+
 
 ##Explanation for what mean works and what doesnot
-*mean_numeric: This will calculate the mean of vec_numeric, which is a numeric vector. This will work because the values are numeric.
-*mean_logical: This will calculate the mean of vec_logical. Logical vectors are treated as 1 (TRUE) and 0 (FALSE), so the mean will represent the proportion of TRUE values.
-*mean_char: This will fail because the vec_char is a character vector, and r cannot calculate a mean for characters. 
-*mean_factor: This will also fail because factors are categorical variables. and r cannot calculate a mean for characters. 
-                   
+
+1.mean_numeric: This will calculate the mean of vec_numeric, which is a numeric vector. This will work because the values are numeric.
+
+2.mean_logical: This will calculate the mean of vec_logical. Logical vectors are treated as 1 (TRUE) and 0 (FALSE), so the mean will represent the proportion of TRUE values.
+
+3.mean_char: This will fail because the vec_char is a character vector, and r cannot calculate a mean for characters. 
+
+4.mean_factor: This will also fail because factors are categorical variables. and r cannot calculate a mean for characters. 
+
+## Explicit conversion to numeric
+```{r chunk_name, echo=TRUE, results='hide'}
+as.numeric(frame_df$vec_char) 
+as.numeric(frame_df$vec_factor)
+```
+
+##Explaination for coercion and convertion:
+
+1.Character to numeric conversion leads to NAs because characters can't be interpreted as numbers.Because characters like "a", "b", etc. cannot be converted to numbers.
+
+2.Factor to numeric conversion works by converting each factor level to its corresponding numeric code.                   
