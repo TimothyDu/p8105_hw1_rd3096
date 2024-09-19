@@ -7,7 +7,7 @@ output: github_document
 #problem 1
 
 ##load the penguins dataset
-```{r}
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
 library(ggplot2)
 library(tidyverse)
 data("penguins", package = "palmerpenguins")
